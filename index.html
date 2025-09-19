@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yıldız Anket A.Ş. - Gelecek Konserler Anketi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: slideIn 0.6s ease-out;
+            position: relative;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .company-name {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 10;
+            animation: glow 3s ease-in-out infinite alternate, bounce 2s ease-in-out infinite;
+        }
+
+        .survey-title {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 10;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        /* Promo banner */
+        .promo-banner {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 10;
+            animation: shake 0.8s ease-in-out infinite, glowBanner 2s ease-in-out infinite alternate;
+            box-shadow: 0 5px 20px rgba(255,107,53,0.4);
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.3); }
+            100% { text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.5); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.95;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+            20%, 40%, 60%, 80% { transform: translateX(2px); }
+        }
+
+        @keyframes glowBanner {
+            0% { box-shadow: 0 5px 20px rgba(255,107,53,0.4); }
+            100% { box-shadow: 0 8px 30px rgba(255,107,53,0.7); }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse2 {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        input[type="text"], input[type="email"], textarea, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .question {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            background: #f0f0f0;
+            transform: translateX(5px);
+        }
+
+        .question-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+
+        .radio-option:hover {
+            background-color: rgba(102, 126, 234, 0.05);
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 6px;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 3px;
+        }
+
+        .question-counter {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .success-text {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        #message-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #message-container div {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: white;
+            animation: slideInUp 0.5s ease-out;
+        }
+        
+        .fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s ease-out;
+        }
+        
+        .user-id-display {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.75rem;
+            color: rgba(0, 0, 0, 0.4);
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .company-name {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .radio-group {
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="company-name">YILDIZ ANKET A.Ş.</h1>
+            <div class="promo-banner">
+                🎵 GELECEK KONSERLERDE %50 İNDİRİM! 🎵
+            </div>
+            <p class="survey-title">10 Soruluk Kısa Ankete Katıl, Avantajı Kaçırma!</p>
+        </div>
+
+        <div class="content">
+            <!-- Giriş Formu -->
+            <div id="loginForm">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h2 style="color: #4a148c; font-size: 1.8rem; margin-bottom: 10px; animation: slideInLeft 1s ease-out;">Ankete Başlamak İçin</h2>
+                    <p style="color: #666; animation: slideInRight 1s ease-out 0.3s both;">Bilgilerinizi girin ve %50 indirim fırsatını yakalayın!</p>
+                </div>
+
+                <div class="form-group" style="animation: slideInUp 1s ease-out 0.6s both;">
+                    <label for="name">👤 Ad Soyad *</label>
+                    <input type="text" id="name" name="name" required placeholder="Adınızı ve soyadınızı giriniz">
+                </div>
+
+                <div class="form-group" style="animation: slideInUp 1s ease-out 0.9s both;">
+                    <label for="email">📧 E-posta *</label>
+                    <input type="email" id="email" name="email" required placeholder="E-posta adresinizi giriniz">
+                </div>
+
+                <div style="text-align: center; margin-top: 30px; animation: slideInUp 1s ease-out 1.2s both;">
+                    <button id="startBtn" class="btn" style="animation: pulse2 2s infinite;">
+                        🚀 ANKETE BAŞLA
+                    </button>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: #888;">
+                        ⏱️ Sadece 2-3 dakika sürer!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Anket Formu -->
+            <div id="surveyForm" class="hidden">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                
+                <div class="question-counter">
+                    <span id="currentQuestion">1</span> / 10
+                </div>
+
+                <!-- Soru 1 -->
+                <div class="question" id="question1">
+                    <div class="question-title">1. Hangi müzik türlerini dinlemeyi tercih ediyorsunuz?</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q1" value="pop">
+                            <span>Pop</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q1" value="rock">
+                            <span>Rock</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q1" value="jazz">
+                            <span>Jazz</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q1" value="klasik">
+                            <span>Klasik</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q1" value="elektronik">
+                            <span>Elektronik</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q1" value="alternatif">
+                            <span>Alternatif</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Soru 2 -->
+                <div class="question hidden" id="question2">
+                    <div class="question-title">2. Yılda kaç konsere gidiyorsunuz?</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q2" value="0">
+                            <span>Hiç gitmedim</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q2" value="1-3">
+                            <span>1-3 konser</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q2" value="4-6">
+                            <span>4-6 konser</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q2" value="7+">
+                            <span>7 ve üzeri</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Soru 3 -->
+                <div class="question hidden" id="question3">
+                    <div class="question-title">3. En çok hangi mekan tiplerinde konser izlemeyi tercih edersiniz?</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q3" value="stadyum">
+                            <span>Stadyum</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q3" value="kapalı-salon">
+                            <span>Kapalı salon</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q3" value="açık-hava">
+                            <span>Açık hava</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q3" value="küçük-mekan">
+                            <span>Küçük/intim mekanlar</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Soru 4 -->
+                <div class="question hidden" id="question4">
+                    <div class="question-title">4. Hangi şarkıcı/grup için kesinlikle konser bileti alırdınız? (Açık uçlu)</div>
+                    <textarea name="q4" placeholder="Cevabınızı buraya yazınız..."></textarea>
+                </div>
+
+                <!-- Soru 5 -->
+                <div class="question hidden" id="question5">
+                    <div class="question-title">5. Konser biletinizi genellikle ne kadar önceden alırsınız?</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q5" value="ön-satış">
+                            <span>Ön satış döneminde</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q5" value="1-ay-önce">
+                            <span>1 ay önce</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q5" value="1-hafta-önce">
+                            <span>1 hafta önce</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q5" value="son-dakika">
+                            <span>Son dakika</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Soru 6 -->
+                <div class="question hidden" id="question6">
+                    <div class="question-title">6. Konser için maksimum ne kadar para harcamaya razısınız?</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q6" value="0-100">
+                            <span>0-100 TL</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q6" value="100-300">
+                            <span>100-300 TL</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q6" value="300-500">
+                            <span>300-500 TL</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q6" value="500+">
+                            <span>500 TL ve üzeri</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Soru 7 -->
+                <div class="question hidden" id="question7">
+                    <div class="question-title">7. Konserlere kimlerle gidiyorsunuz?</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q7" value="yalnız">
+                            <span>Yalnız</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q7" value="arkadaşlarla">
+                            <span>Arkadaşlarla</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q7" value="aile">
+                            <span>Aile ile</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q7" value="partner">
+                            <span>Eşim/Sevgilimle</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Soru 8 -->
+                <div class="question hidden" id="question8">
+                    <div class="question-title">8. 2025 yılında hangi konser etkinliklerini merakla bekliyorsunuz? (Açık uçlu)</div>
+                    <textarea name="q8" placeholder="Cevabınızı buraya yazınız..."></textarea>
+                </div>
+
+                <!-- Soru 9 -->
+                <div class="question hidden" id="question9">
+                    <div class="question-title">9. Konser deneyiminizi en çok etkileyen faktör nedir?</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q9" value="sanatçı-performansı">
+                            <span>Sanatçının performansı</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q9" value="ses-kalitesi">
+                            <span>Ses kalitesi</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q9" value="mekan-atmosferi">
+                            <span>Mekan atmosferi</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q9" value="kalabalık-enerjisi">
+                            <span>Kalabalığın enerjisi</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q9" value="görsel-efektler">
+                            <span>Görsel efektler</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Soru 10 -->
+                <div class="question hidden" id="question10">
+                    <div class="question-title">10. Konser organizasyon şirketlerinden beklentileriniz nelerdir? Geliştirilmesini istediğiniz konular var mı? (Açık uçlu)</div>
+                    <textarea name="q10" placeholder="Cevabınızı buraya yazınız..."></textarea>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button id="nextBtn" class="btn">SONRAKİ</button>
+                    <button id="submitBtn" class="btn hidden">ANKETİ GÖNDER</button>
+                </div>
+            </div>
+
+            <!-- Teşekkür Mesajı -->
+            <div id="successMessage" class="hidden">
+                <div class="success-message">
+                    <div class="success-icon">✓</div>
+                    <div class="success-title">Teşekkür Ederiz!</div>
+                    <div class="success-text">
+                        Anketimize katıldığınız için teşekkür ederiz. <br>
+                        Verdiğiniz cevaplar bizim için çok değerli. <br>
+                        Yakında düzenleyeceğimiz konserlerle ilgili bilgilendirmelerimizi e-posta adresinize göndereceğiz.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="message-container"></div>
+        <div class="user-id-display">Kullanıcı Kimliği: <span id="user-id">Yükleniyor...</span></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, where, doc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+
+        let currentQuestionIndex = 1;
+        let userData = {};
+        
+        // Firebase global değişkenleri
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        // Kullanıcının sağladığı Firebase yapılandırmasını kullanma
+        const firebaseConfig = {
+            apiKey: "AIzaSyCnnU1k7PVgkTNPDbhz70yPNczzMDdggTQ",
+            authDomain: "anket-54267.firebaseapp.com",
+            projectId: "anket-54267",
+            storageBucket: "anket-54267.appspot.com",
+            messagingSenderId: "746592992651",
+            appId: "1:746592992651:web:bb1b9e7f4fe263a30fc38e",
+            measurementId: "G-KPZQ83NBQ7"
+        };
+
+        // Eğer bir dış yapılandırma sağlanırsa, onu kullanır.
+        const providedFirebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        if (providedFirebaseConfig) {
+            Object.assign(firebaseConfig, providedFirebaseConfig);
+        }
+
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth, userId = null;
+
+        const startBtn = document.getElementById('startBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const loginForm = document.getElementById('loginForm');
+        const surveyForm = document.getElementById('surveyForm');
+        const successMessage = document.getElementById('successMessage');
+        const messageContainer = document.getElementById('message-container');
+        const userIdDisplay = document.getElementById('user-id');
+
+        // Firebase başlatma ve kimlik doğrulama
+        window.onload = async function() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                // Analytics eklendi ancak bu uygulamada kullanılmıyor.
+                const analytics = getAnalytics(app);
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        userIdDisplay.textContent = userId;
+                        console.log("Kullanıcı oturum açtı:", userId);
+                    } else {
+                        await signInAnonymously(auth);
+                        console.log("Anonim olarak oturum açıldı.");
+                    }
+                });
+
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Firebase başlatılırken bir hata oluştu:", error);
+                // Hata mesajını daha ayrıntılı göster
+                showMessage(`Firebase başlatılırken bir hata oluştu: ${error.message}`, 'bg-red-500');
+            }
+        };
+
+        function startSurvey() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if (!name || !email) {
+                showMessage('Lütfen ad soyad ve e-posta alanlarını doldurunuz.', 'bg-red-500');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showMessage('Lütfen geçerli bir e-posta adresi giriniz.', 'bg-red-500');
+                return;
+            }
+
+            userData.name = name;
+            userData.email = email;
+
+            loginForm.classList.add('hidden');
+            surveyForm.classList.remove('hidden');
+            updateProgress();
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex > 10) return; // Zaten son soruya gelinmişse bir şey yapma
+
+            const currentQuestion = document.getElementById('question' + currentQuestionIndex);
+            if (!currentQuestion) {
+                console.error('Mevcut anket sorusu elemanı bulunamadı.');
+                return;
+            }
+            
+            const inputs = currentQuestion.querySelectorAll('input, textarea');
+            let answered = false;
+            let answerValue = '';
+
+            inputs.forEach(input => {
+                if (input.type === 'radio' && input.checked) {
+                    answered = true;
+                    answerValue = input.value;
+                } else if (input.type !== 'radio' && input.value.trim() !== '') {
+                    answered = true;
+                    answerValue = input.value;
+                }
+            });
+
+            if (!answered) {
+                showMessage('Lütfen bu soruyu cevaplayınız.', 'bg-red-500');
+                return;
+            }
+
+            userData['q' + currentQuestionIndex] = answerValue;
+            currentQuestion.classList.add('hidden');
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex <= 10) {
+                const nextQuestionEl = document.getElementById('question' + currentQuestionIndex);
+                if (nextQuestionEl) {
+                    nextQuestionEl.classList.remove('hidden');
+                }
+                document.getElementById('currentQuestion').textContent = currentQuestionIndex;
+                updateProgress();
+
+                if (currentQuestionIndex === 10) {
+                    nextBtn.classList.add('hidden');
+                    submitBtn.classList.remove('hidden');
+                }
+            }
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestionIndex / 10) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        async function submitSurvey() {
+            const currentQuestion = document.getElementById('question' + currentQuestionIndex);
+            if (!currentQuestion) {
+                console.error('Son anket sorusu elemanı bulunamadı.');
+                return;
+            }
+
+            const inputs = currentQuestion.querySelectorAll('input, textarea');
+            let answered = false;
+            let answerValue = '';
+            
+            inputs.forEach(input => {
+                if (input.type === 'radio' && input.checked) {
+                    answered = true;
+                    answerValue = input.value;
+                } else if (input.type !== 'radio' && input.value.trim() !== '') {
+                    answered = true;
+                    answerValue = input.value;
+                }
+            });
+
+            if (!answered) {
+                showMessage('Lütfen son soruyu cevaplayınız.', 'bg-red-500');
+                return;
+            }
+            userData['q' + currentQuestionIndex] = answerValue;
+            
+            if (!db || !userId) {
+                showMessage('Veritabanı bağlantısı yok veya kullanıcı oturumu açılmamış. Lütfen tekrar deneyin.', 'bg-red-500');
+                return;
+            }
+
+            const dataToSave = {
+                ...userData,
+                userId: userId,
+                timestamp: new Date().toISOString(),
+            };
+
+            try {
+                const docRef = await addDoc(collection(db, `/artifacts/${appId}/public/data/surveyResponses`), dataToSave);
+                console.log("Belge kimliğiyle başarıyla kaydedildi:", docRef.id);
+                
+                surveyForm.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+            } catch (e) {
+                console.error("Veri eklenirken bir hata oluştu:", e);
+                showMessage('Anket gönderilirken bir hata oluştu.', 'bg-red-500');
+            }
+        }
+        
+        function showMessage(msg, bgColor) {
+            messageContainer.innerHTML = `<div class="${bgColor} text-white p-4 rounded-lg shadow-md transition-all duration-300 ease-in-out">${msg}</div>`;
+            setTimeout(() => {
+                const msgDiv = messageContainer.querySelector('div');
+                if (msgDiv) {
+                     msgDiv.classList.add('fade-out');
+                     setTimeout(() => {
+                         messageContainer.innerHTML = '';
+                     }, 500);
+                }
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            startBtn.addEventListener('click', startSurvey);
+            nextBtn.addEventListener('click', nextQuestion);
+            submitBtn.addEventListener('click', submitSurvey);
+
+            const radioOptions = document.querySelectorAll('.radio-option');
+            radioOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    if (radio) {
+                        radio.checked = true;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
